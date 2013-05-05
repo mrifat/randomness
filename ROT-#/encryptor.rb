@@ -31,6 +31,6 @@ class Encryptor
 
   def decrypt_file(rotation, file_uri)
     cipher_with_rotation = cipher(rotation)
-    File.open("#{file_uri}_decrypted", 'w') { |file| file.write(File.open(file_uri, 'r').read.split('').map { |letter| cipher_with_rotation.key(letter) }.join) } unless File.zero?(file_uri) &&  File.directory?(file_uri) &&  File.directory?(file_uri) &&  File.executable?(file_uri) && File.owned?(file_uri)
+    File.open("#{file_uri}_decrypted", 'w') { |file| file.write(File.open(file_uri, 'r').read.split('').map { |letter| cipher_with_rotation.key(letter) }.join) } unless File.zero?(file_uri) &&  File.directory?(file_uri) &&  File.executable?(file_uri) && File.owned?(file_uri)
   end
 end
