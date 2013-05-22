@@ -10,7 +10,7 @@ Me = Struct.new(:name, :weapons)
 me = Me.new('Rifat', %w(Machine\ gun RPG 9mm\ gun Colt-45 Katana Ak-47 Ak-12))
 
 class String
-  def engage(person)
+  define_method "engage" do |person|
     person.taint
   end
 end

@@ -1,0 +1,7 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: car_rental_development
+  pool: 5
+  username: blabla
+  password: blabla
