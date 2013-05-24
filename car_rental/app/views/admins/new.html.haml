@@ -1,0 +1,8 @@
+- if current_user
+  %h3 You're not allowed to be here
+  = link_to 'Home', '/'
+- else
+  - model_class = Admin
+  .page-header
+    %h1= 'Create a new Admin'
+    = render :partial => "form"

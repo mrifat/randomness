@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-CarRental::Application.config.secret_key_base = '15a7871130e7fccc85e482f9e6674d611f522674eb78a3f9f8fbe70a1800343dc84cd64d36925d563e356ef35abfbcbf2e9f5a12520fb1ed54436a69fd5e03f1'
+CarRental::Application.config.secret_key_base = '0b3f4b61a0633554229da1f5cc25aab18fb88294fdd554268fd2df9d1cd90d90fd5300a564b2198091955f8feafd6df4ee92d4d7a8cce2d44e01bf95b4428513'
