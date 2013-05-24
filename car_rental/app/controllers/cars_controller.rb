@@ -1,6 +1,6 @@
 class CarsController < ApplicationController
   before_action :set_car, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate_admin!, except: [:index]
+  before_filter :authenticate_admin!, except: [:show, :available_cars]
   # GET /cars
   # GET /cars.json
   def index
@@ -61,6 +61,20 @@ class CarsController < ApplicationController
     end
   end
 
+  def available_cars
+    @a_cars = Car.available_cars
+  end
+  def maintenance_cars
+    @m_cars = Car.cars_in_maintenance
+  end
+  def insuring_cars
+    @i_cars = Car.cars_insuring
+  end
+  def licensing_cars
+    @l_cars = Car.cars_licensing
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_car
@@ -69,6 +83,6 @@ class CarsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def car_params
-      params.require(:car).permit(:type, :model, :rent_price, :state)
+      params.require(:car).permit(:manufacturer, :model, :rent_price, :state)
     end
 end

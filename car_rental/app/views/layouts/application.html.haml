@@ -13,11 +13,12 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand{:href => '/cars'}
+          %a.brand{:href => '/available_cars'}
             Car Rental
           %div.nav-collapse
             %ul.nav
               -if signed_in?(:user)
+                %li= link_to "#{current_user.name}", edit_user_path(current_user)
                 %li= link_to 'Logout', destroy_user_session_path, :method => :delete
               - elsif signed_in?(:admin)
                 %li= link_to 'Logout', destroy_admin_session_path, :method => :delete
@@ -35,5 +36,7 @@
             sldkgfsdghk sdlkghkl jshdglk shdlksh dglks dlgk sd
             gds glksdh ldskjgh sdlkjgh sldkgh sdg
             dsglk dsjhgls kdjgs
-            dg sdl;kgjh dslkgjhdslkgjhsdlkghsdlkgjh dsgkljsh dgklh dsklgh sdg
-            sdglksdjhlsdkjghskldghaslkghawpeuoghaslkjghaskljghasdklgh
+            dg sdl;kgjh dslkgjhdslkgjhsdlkghsdlkgjh
+            dsgkljsh dgklh dsklgh sdg
+            sdglksdjhlsdkjghskldghaslkghawpeuog
+            lkjghaskljghasdklgh

@@ -8,6 +8,10 @@ class AdminsController < ApplicationController
     @admins = Admin.all
     @users = User.all
     @cars = Car.all
+    @a_cars = Car.available_cars
+    @m_cars = Car.cars_in_maintenance
+    @i_cars = Car.cars_insuring
+    @l_cars = Car.cars_licensing
   end
 
   # GET /admins/1

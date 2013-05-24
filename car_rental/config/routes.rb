@@ -1,5 +1,10 @@
 CarRental::Application.routes.draw do
-  root 'cars#index'
+  get 'available_cars' => 'cars#available_cars'
+  get 'maintenance_cars' => 'cars#maintenance_cars'
+  get 'insuring_cars' => 'cars#insuring_cars'
+  get 'licensing_cars' => 'cars#licensing_cars'
+  root 'cars#available_cars'
+
   devise_for :admins, :controllers => { :registrations => 'registrations'}
   resources :admins
 
