@@ -1,4 +1,12 @@
 CarRental::Application.routes.draw do
+  root 'cars#index'
+  devise_for :admins, :controllers => { :registrations => 'registrations'}
+  resources :admins
+
+  devise_for :users
+  resources :users
+  resources :cars
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
