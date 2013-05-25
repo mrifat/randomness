@@ -14,7 +14,9 @@
 %p
   %strong= model_class.human_attribute_name(:state) + ':'
   = @car.state
-
+%p
+  %strong= model_class.human_attribute_name(:image) + ':'
+  = image_tag @car.image.url(:medium)
 - if current_admin
   .form-actions
     = link_to t('.back', :default => t("helpers.links.back")), cars_path, :class => 'btn'

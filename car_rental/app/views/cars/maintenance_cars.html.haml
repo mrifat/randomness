@@ -7,9 +7,11 @@
       %th= model_class.human_attribute_name(:manufacturer)
       %th= model_class.human_attribute_name(:model)
       %th= model_class.human_attribute_name(:rent_price)
+      %th= model_class.human_attribute_name(:image)
   %tbody
     - @m_cars.each do |car|
       %tr
         %td= link_to car.manufacturer, car_path(car)
         %td= car.model
         %td= car.rent_price
+        %td= image_tag car.image.url(:thumb)

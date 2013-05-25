@@ -1,5 +1,7 @@
 class Car < ActiveRecord::Base
   validates_presence_of :manufacturer, :model, :rent_price, :state
+  has_attached_file :image, :styles => { medium: '300x300', thumb: '100x100'}, :default_url => 'images/:style/missing.png'
+  validates_attachment :image, presence: true, content_type: { content_type: 'image/png' }, size: { :in => 10..1024.kilobytes }
   validates :model, :numericality => { :only_integer => true, :less_than_or_equal_to => Time.now.year }
   validates :state, :inclusion => { :in => %w( rented available maintenance insuring licensing ) }
 

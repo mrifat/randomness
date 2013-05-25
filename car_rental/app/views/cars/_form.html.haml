@@ -15,6 +15,10 @@
     = f.label :state, :class => 'control-label'
     .controls
       = f.text_field :state, :class => 'text_field'
+  .control-group
+    = f.label :image, :class => 'control-label'
+    .controls
+      = f.file_field :image, :class => 'file_field'
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
     = link_to t('.cancel', :default => t("helpers.links.cancel")), cars_path, :class => 'btn'
