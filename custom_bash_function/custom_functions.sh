@@ -13,7 +13,7 @@ function g()
   fi
 }
 
-# Connect to Disconnect from a network and
+# Connect to a network or Disconnect from a network and
 # connect to another.
 # TODO: Clean this shit up.
 #
