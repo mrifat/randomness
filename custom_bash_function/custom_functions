@@ -4,8 +4,7 @@
 #
 function g()
 {
-  if [ $# -ge 1 ]
-  then
+  if [ $# -ge 1 ]; then
     git grep $@
   else
     printf "No arguments supplied\nUse \`git grep --help\` for help\n"
