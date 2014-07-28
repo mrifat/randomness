@@ -17,7 +17,7 @@ function g()
 function ccc() {
   if [ "$#" -eq 1 ]; then
     CONNECTED_DEVICE=`nmcli d | grep '\bconnected\b' | awk '{ print $1; }'`
-    if [ -z "$CONNECTED_DEVICE" ]; then
+    if ! [ -z "$CONNECTED_DEVICE" ]; then
       nmcli dev disconnect iface $CONNECTED_DEVICE
     fi
 
