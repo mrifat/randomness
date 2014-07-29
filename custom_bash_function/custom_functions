@@ -22,6 +22,8 @@ function ccc() {
     fi
 
     nmcli con up id $1
+    CONNECTED_DEVICE=`nmcli d | grep '\bconnected\b' | awk '{ print $1; }'`
+    printf "Connected to $CONNECTED_DEVICE\n"
   else
     printf "Wrong number of arguments.\n\n"
     printf "ccc Usage:\n"
