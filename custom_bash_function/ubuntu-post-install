@@ -11,7 +11,7 @@ mkdir ~/workspace/contributions
 mkdir ~/services
 
 # Install basic applications
-apt-get -y --force-yes vim git htop postgresql libpq-dev install build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libxml2-dev libxslt-dev autoconf libc6-dev nodejs
+apt-get -y --force-yes vim git htop postgresql libpq-dev build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libxml2-dev libxslt-dev autoconf libc6-dev nodejs
 
 # Clone necessary repos
 cd ~/workspace/MRifat
