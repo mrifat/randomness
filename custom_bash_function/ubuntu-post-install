@@ -9,14 +9,52 @@ mkdir ~/workspace
 mkdir ~/workspace/MRifat
 mkdir ~/workspace/contributions
 mkdir ~/services
+mkdir ~/github
 
 # Install basic applications
-apt-get -y --force-yes vim git htop postgresql libpq-dev build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libxml2-dev libxslt-dev autoconf libc6-dev nodejs
+apt-get -y --force-yes ghc cabal-install libusb-1.0 postgresql libpq-dev build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libxml2-dev libxslt-dev autoconf libc6-dev tmux vim git htop nodejs xbindkeys xmacro
+
+# Get necessary packages
+cd ~/Downloads
+wget http://hackage.haskell.org/package/bindings-DSL-1.0.21/bindings-DSL-1.0.21.tar.gz http://hackage.haskell.org/package/bindings-libusb-1.4.5.0/bindings-libusb-1.4.5.0.tar.gz http://hackage.haskell.org/package/usb-1.2.0.1/usb-1.2.0.1.tar.gz http://hackage.haskell.org/package/text-1.1.1.3/text-1.1.1.3.tar.gz http://hackage.haskell.org/package/vector-0.10.12.1/vector-0.10.12.1.tar.gz http://hackage.haskell.org/package/primitive-0.5.4.0/primitive-0.5.4.0.tar.gz
+
+# Install Haskell Usb package
+tars=( "bindings-DSL-1.0.21.tar.gz" "bindings-libusb-1.4.5.0.tar.gz" "text-1.1.1.3.tar.gz" "primitive-0.5.4.0.tar.gz" "vector-0.10.12.1.tar.gz" "usb-1.2.0.1.tar.gz" )
+dirqs=( "bindings-DSL-1.0.21" "bindings-libusb-1.4.5.0" "text-1.1.1.3" "primitive-0.5.4.0" "vector-0.10.12.1" "usb-1.2.0.1" )
+for file in "${tars}"
+do
+  :
+  tar xzf $file
+done
+
+for dir in "${dirqs}"
+do
+  :
+  cd $dir
+  sudo runhaskell Setup.hs configure
+  sudo runhaskell Setup.hs build
+  sudo runhaskell Setup.hs install
+done
 
 # Clone necessary repos
 cd ~/workspace/MRifat
 git clone https://github.com/MRifat/randomness.git
 git clone https://github.com/MRifat/dotfiles.git
+
+cd ~/github
+git clone https://github.com/tuxmark5/EnableRazer.git
+
+# Configure Razer Devices
+cabal update
+cabal install usb
+cd EnableRazer
+mapfile -t lines < <(lsusb -d 1532: | grep -o -E "[:][[:digit:]]+[[:lower:]]*" | sed 's/:/0x/')
+line="  withDevice 0x1532 [${lines[0]}, ${lines[1]}] $ \\\dev -> do"
+sed -i "67s/.*/$line/" src/Main.hs
+cabal configure
+cabal build
+sudo cp dist/build/EnableRazer/EnableRazer /sbin/.
+sudo /sbin/EnableRazer
 
 # Setup Vim
 mkdir ~/.vim/colors
