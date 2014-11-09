@@ -12,7 +12,7 @@ mkdir ~/services
 mkdir ~/github
 
 # Install basic applications
-apt-get -y --force-yes postgresql libpq-dev build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libxml2-dev libxslt-dev autoconf libc6-dev tmux vim git htop nodejs xbindkeys xmacro
+apt-get -y --force-yes postgresql libpq-dev build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libxml2-dev libxslt-dev autoconf libc6-dev tmux vim git htop nodejs python-usb xbindkeys xmacro
 
 # Clone necessary repos
 cd ~/workspace/MRifat
@@ -20,7 +20,15 @@ git clone https://github.com/MRifat/randomness.git
 git clone https://github.com/MRifat/dotfiles.git
 
 cd ~/github
-git clone https://github.com/tuxmark5/EnableRazer.git
+git clone https://gist.github.com/8054226.git
+
+# Configure Razer Devices
+cd 8054226/
+adress=`lsusb -d 1532: | grep -o -E "[:][[:digit:]]+[[:lower:]]*" | sed 's/:/0x/'`
+if [ "$address" = "0x011b" ]; then
+  sed -i "19s/0x011a/0x011b/" razer-bwu13-macro.py
+fi
+
 
 # Setup Vim
 mkdir ~/.vim/colors
