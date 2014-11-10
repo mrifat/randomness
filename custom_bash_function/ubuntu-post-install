@@ -66,7 +66,7 @@ git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/r
 git clone https://github.com/maljub01/rbenv-bundle-exec.git ~/.rbenv/plugins/rbenv-bundle-exec
 
 # Install Rubies
-for version in `cat ~/workspace/randomness/ruby-versions`; do rbenv install $version; done
+for version in `cat ~/workspace/MRifat/randomness/ruby-versions`; do rbenv install $version; done
 
 # We're Done
 echo ""
