@@ -69,6 +69,12 @@ if [ "$address" = "0x011b" ]; then
   sed -i "19s/0x011a/0x011b/" razer-bwu13-macro.py
 fi
 chmod +x razer-bwu13-macro.py
+
+sudo crontab -l > scron
+echo "@reboot python /home/rifat/github/8054226/razer-bwu13-macro.py > /home/rifat/reboot.log 2>&1" >> scron
+sudo crontab scron
+rm scron
+
 python razer-bwu13-macro.py
 
 # Setup xbindkeys
