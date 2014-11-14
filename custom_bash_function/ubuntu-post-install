@@ -1,10 +1,18 @@
 #!/bin/bash
 
+# Variables
+bold=`tput bold` # Bold text
+nt=`tput srg0`   # Normal text
+cayan='\e[1;36m' # Color light cayan
+nc='\e[0m'       # No color
+adress=`lsusb -d 1532: | grep -o -E "[:][[:digit:]]+[[:lower:]]*" | sed 's/:/0x/'`
+
 # Update The System
-apt-get update -y
-apt-get upgrade -y
+apt-get update -y -q
+apt-get upgrade -y -q
 
 # Create directories
+echo -e "${cayan}${bold}Creating Directories${nc}${nt}"
 mkdir ~/workspace
 mkdir ~/workspace/MRifat
 mkdir ~/workspace/contributions
@@ -12,38 +20,73 @@ mkdir ~/services
 mkdir ~/github
 
 # Install basic applications
-apt-get -y --force-yes postgresql libpq-dev build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libxml2-dev libxslt-dev autoconf libc6-dev tmux vim git htop nodejs python-usb xbindkeys xmacro
+echo -e "${cayan}${bold}Installing basic applications${nc}${nt}"
+apt-get -y -q postgresql libpq-dev build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libxml2-dev libxslt-dev autoconf libc6-dev tmux vim git htop nodejs python-usb xbindkeys xmacro
 
 # Clone necessary repos
+echo -e "${cayan}${bold}Cloning necessary repos${nc}${nt}"
 cd ~/workspace/MRifat
 git clone https://github.com/MRifat/randomness.git
 git clone https://github.com/MRifat/dotfiles.git
 
-cd ~/github
-git clone https://gist.github.com/8054226.git
+# Setup dotfiles
+cp dotfiles/tmux.conf ~/.
+cp dotfiles/vimrc ~/.vimrc
+cp dotfiles/umniah.sh ~/.
+cp dotfiles/12d1\:1446 /etc/usb_modeswitch.d/.
+cd
 
-# Configure Razer Devices
-cd 8054226/
-adress=`lsusb -d 1532: | grep -o -E "[:][[:digit:]]+[[:lower:]]*" | sed 's/:/0x/'`
-if [ "$address" = "0x011b" ]; then
-  sed -i "19s/0x011a/0x011b/" razer-bwu13-macro.py
-fi
-
+echo '############################################################################' >> .bashrc
+echo '############################################################################' >> .bashrc
+echo '' >> .bashrc
+echo '. $HOME/dotfiles/custom_functions' >> .bashrc
+echo '' >> .bashrc
+echo '############################################################################' >> .bashrc
+echo '############################################################################' >> .bashrc
+echo '' >> .bashrc
+echo 'export AKHTABOOT_DIR=$HOME/workspace/akhtaboot3' >> .bashrc
+echo 'export REDIS_DIR=$HOME/workspace/redis/src' >> .bashrc
+echo 'export ELASTIC_DIR=$HOME/workspace/elasticsearch/' >> .bashrc
+echo 'export OKRS_DIR=$HOME/workspace/hatchery/okrs' >> .bashrc
+echo '' >> .bashrc
+echo '############################################################################' >> .bashrc
+echo '############################################################################' >> .bashrc
 
 # Setup Vim
+echo -e "${cayan}${bold}Setting up Vim${nc}${nt}"
 mkdir ~/.vim/colors
-cp dotfiles/vimrc ~/.vimrc
 cp dotfiles/twilight.vim ~/.vim/colors/.
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 vim +PluginInstall +qall
 
+# Configure Razer Devices
+echo -e "${cayan}${bold}Configuring Razer Devices${nc}${nt}"
+cd ~/github
+git clone https://gist.github.com/8054226.git
+
+cd 8054226/
+if [ "$address" = "0x011b" ]; then
+  sed -i "19s/0x011a/0x011b/" razer-bwu13-macro.py
+fi
+chmod +x razer-bwu13-macro.py
+python razer-bwu13-macro.py
+
+# Setup xbindkeys
+echo -e "${cayan}${bold}Setting up xbindkeys${nc}${nt}"
+cp ~/workspace/MRifat/dotfiles/xbindkeysrc ~/.xbindkeysrc
+cp ~/workspace/MRifat/randomness/macros/*.txt ~/.
+xbindkeys
+
+
 # Clone contributions
+echo -e "${cayan}${bold}Cloning contributions${nc}${nt}"
 cd workspace/contributions
 git clone https://github.com/railsgirls/railsgirls.git
 git clone https://github.com/MRifat/railsgirls.github.com.git
 git clone https://github.com/MRifat/oath.git
 
 # Install Redis
+echo -e "${cayan}${bold}Installing Redis${nc}${nt}"
 cd services
 git clone https://github.com/antirez/redis.git
 cd redis
@@ -53,25 +96,36 @@ cd utils
 cd
 
 # Configure PostgreSQL
+echo -e "${cayan}${bold}Configuring PostgreSQL${nc}${nt}"
 su - postgres
 create role $1 with createdb login password $2
 # psql -c "CREATE USER $1 WITH PASSWORD '$2';"
 
 # Setup rbenv
+echo -e "${cayan}${bold}Setting up rbenv${nc}${nt}"
 git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+
+echo '############################################################################' >> .bashrc
+echo '############################################################################' >> .bashrc
+echo '' >> .bashrc
 echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
 echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+echo '' >> .bashrc
+echo '############################################################################' >> .bashrc
+echo '############################################################################' >> .bashrc
+
 git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
 git clone https://github.com/maljub01/rbenv-bundle-exec.git ~/.rbenv/plugins/rbenv-bundle-exec
 
 # Install Rubies
+echo -e "${cayan}${bold}Installing Rubies${nc}${nt}"
 for version in `cat ~/workspace/MRifat/randomness/ruby-versions`; do rbenv install $version; done
 
 # We're Done
 echo ""
-echo "==================="
-echo "====We're Done!===="
-echo "==================="
+echo -e "${cayan}${bold}===================${nc}${nt}"
+echo -e "${cayan}${bold}====We're Done!====${nc}${nt}"
+echo -e "${cayan}${bold}===================${nc}${nt}"
 echo ""
-echo "You might wanna update this script soon!"
+echo -e "${cayan}${bold}You might wanna update this script soon!${nc}${nt}"
