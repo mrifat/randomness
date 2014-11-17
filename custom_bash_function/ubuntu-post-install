@@ -8,8 +8,8 @@ nc='\e[0m'       # No color
 adress=`lsusb -d 1532: | grep -o -E "[:][[:digit:]]+[[:lower:]]*" | sed 's/:/0x/'`
 
 # Update The System
-apt-get update -y -q
-apt-get upgrade -y -q
+sudo apt-get update -y -q
+sudo apt-get upgrade -y -q
 
 # Create directories
 echo -e "${cayan}${bold}Creating Directories${nc}${nt}"
@@ -18,6 +18,7 @@ mkdir ~/workspace/MRifat
 mkdir ~/workspace/contributions
 mkdir ~/services
 mkdir ~/github
+mkdir ~/.vim
 
 # Install basic applications
 echo -e "${cayan}${bold}Installing basic applications${nc}${nt}"
@@ -34,12 +35,11 @@ cp dotfiles/tmux.conf ~/.
 cp dotfiles/vimrc ~/.vimrc
 cp dotfiles/umniah.sh ~/.
 cp dotfiles/12d1\:1446 /etc/usb_modeswitch.d/.
-cd
 
 echo '############################################################################' >> .bashrc
 echo '############################################################################' >> .bashrc
 echo '' >> .bashrc
-echo '. $HOME/dotfiles/custom_functions' >> .bashrc
+echo '. $HOME/workspace/MRifat/dotfiles/custom_functions' >> .bashrc
 echo '' >> .bashrc
 echo '############################################################################' >> .bashrc
 echo '############################################################################' >> .bashrc
@@ -60,29 +60,28 @@ git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 vim +PluginInstall +qall
 
 # Configure Razer Devices
-echo -e "${cayan}${bold}Configuring Razer Devices${nc}${nt}"
-cd ~/github
-git clone https://gist.github.com/8054226.git
-
-cd 8054226/
-if [ "$address" = "0x011b" ]; then
-  sed -i "19s/0x011a/0x011b/" razer-bwu13-macro.py
-fi
-chmod +x razer-bwu13-macro.py
-
-sudo crontab -l > scron
-echo "@reboot python /home/rifat/github/8054226/razer-bwu13-macro.py > /home/rifat/reboot.log 2>&1" >> scron
-sudo crontab scron
-rm scron
-
-python razer-bwu13-macro.py
+# echo -e "${cayan}${bold}Configuring Razer Devices${nc}${nt}"
+# cd ~/github
+# git clone https://gist.github.com/8054226.git
+#
+# cd 8054226/
+# if [ "$address" = "0x011b" ]; then
+#   sed -i "19s/0x011a/0x011b/" razer-bwu13-macro.py
+# fi
+# chmod +x razer-bwu13-macro.py
+#
+# sudo crontab -l > scron
+# echo "@reboot python /home/rifat/github/8054226/razer-bwu13-macro.py > /home/rifat/reboot.log 2>&1" >> scron
+# sudo crontab scron
+# rm scron
+#
+# python razer-bwu13-macro.py
 
 # Setup xbindkeys
-cd
-echo -e "${cayan}${bold}Setting up xbindkeys${nc}${nt}"
-cp ~/workspace/MRifat/dotfiles/xbindkeysrc ~/.xbindkeysrc
-cp ~/workspace/MRifat/randomness/macros/*.txt ~/.
-xbindkeys
+# echo -e "${cayan}${bold}Setting up xbindkeys${nc}${nt}"
+# cp ~/workspace/MRifat/dotfiles/xbindkeysrc ~/.xbindkeysrc
+# cp ~/workspace/MRifat/randomness/macros/*.txt ~/.
+# xbindkeys
 
 
 # Clone contributions
@@ -94,7 +93,7 @@ git clone https://github.com/MRifat/oath.git
 
 # Install Redis
 echo -e "${cayan}${bold}Installing Redis${nc}${nt}"
-cd services
+cd ~/services
 git clone https://github.com/antirez/redis.git
 cd redis
 make install
@@ -105,7 +104,7 @@ cd
 # Configure PostgreSQL
 echo -e "${cayan}${bold}Configuring PostgreSQL${nc}${nt}"
 su - postgres
-create role $1 with createdb login password $2
+sudo create role $1 with createdb login password $2
 # psql -c "CREATE USER $1 WITH PASSWORD '$2';"
 
 # Setup rbenv
@@ -127,6 +126,9 @@ git clone https://github.com/maljub01/rbenv-bundle-exec.git ~/.rbenv/plugins/rbe
 
 # Install Rubies
 echo -e "${cayan}${bold}Installing Rubies${nc}${nt}"
+
+source ~/.bashrc
+
 for version in `cat ~/workspace/MRifat/randomness/ruby-versions`; do rbenv install $version; done
 
 # We're Done
