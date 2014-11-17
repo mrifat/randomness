@@ -2,7 +2,7 @@
 
 # Variables
 bold=`tput bold` # Bold text
-nt=`tput srg0`   # Normal text
+nt=`tput sgr0`   # Normal text
 cayan='\e[1;36m' # Color light cayan
 nc='\e[0m'       # No color
 adress=`lsusb -d 1532: | grep -o -E "[:][[:digit:]]+[[:lower:]]*" | sed 's/:/0x/'`
