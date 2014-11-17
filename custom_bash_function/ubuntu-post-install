@@ -78,6 +78,7 @@ rm scron
 python razer-bwu13-macro.py
 
 # Setup xbindkeys
+cd
 echo -e "${cayan}${bold}Setting up xbindkeys${nc}${nt}"
 cp ~/workspace/MRifat/dotfiles/xbindkeysrc ~/.xbindkeysrc
 cp ~/workspace/MRifat/randomness/macros/*.txt ~/.
