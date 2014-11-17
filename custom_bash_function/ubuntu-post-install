@@ -21,7 +21,7 @@ mkdir ~/github
 
 # Install basic applications
 echo -e "${cayan}${bold}Installing basic applications${nc}${nt}"
-apt-get -y -q postgresql libpq-dev build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libxml2-dev libxslt-dev autoconf libc6-dev tmux vim git htop nodejs python-usb xbindkeys xmacro
+apt-get install -y -q postgresql libpq-dev build-essential bison openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libxml2-dev libxslt-dev autoconf libc6-dev tmux vim git htop nodejs python-usb xbindkeys xmacro
 
 # Clone necessary repos
 echo -e "${cayan}${bold}Cloning necessary repos${nc}${nt}"
